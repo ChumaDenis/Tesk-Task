@@ -15,18 +15,18 @@ namespace CSharpTest
 
             if (weekEnds!=null)
             {
-                foreach (WeekEnd weekEnd in weekEnds)
+                weekEnds.ToList().ForEach(weekEnd =>
                 {
-                    DateTime dateOfWeekEnd=weekEnd.StartDate;
-                    while(dateOfWeekEnd.CompareTo(weekEnd.EndDate)<=0)
+                    DateTime dateOfWeekEnd = weekEnd.StartDate;
+                    while (dateOfWeekEnd.CompareTo(weekEnd.EndDate) <= 0)
                     {
                         if (dateOfWeekEnd.CompareTo(startDate) >= 0 && dateOfWeekEnd.CompareTo(resDate) <= 0)
                         {
-                            resDate= resDate.AddDays(1);
+                            resDate = resDate.AddDays(1);
                         }
-                        dateOfWeekEnd= dateOfWeekEnd.AddDays(1);
-                    } 
-                }
+                        dateOfWeekEnd = dateOfWeekEnd.AddDays(1);
+                    }
+                });
             }
             return resDate;
         }
