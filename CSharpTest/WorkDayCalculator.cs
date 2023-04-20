@@ -10,17 +10,25 @@ namespace CSharpTest
     {
         public DateTime Calculate(DateTime startDate, int dayCount, WeekEnd[] weekEnds)
         {
-            int daysinWeekEnds = 0;
-            if (weekEnds != null)
+            DateTime resDate = startDate;
+            resDate= resDate.AddDays(dayCount-1);
+
+            if (weekEnds!=null)
             {
-                weekEnds.ToList().ForEach(x =>
+                foreach (WeekEnd weekEnd in weekEnds)
                 {
-                    daysinWeekEnds += x.EndDate.Day - x.StartDate.Day;
-                });
-                daysinWeekEnds++;
+                    DateTime dateOfWeekEnd=weekEnd.StartDate;
+                    while(dateOfWeekEnd.CompareTo(weekEnd.EndDate)<=0)
+                    {
+                        if (dateOfWeekEnd.CompareTo(startDate) >= 0 && dateOfWeekEnd.CompareTo(resDate) <= 0)
+                        {
+                            resDate= resDate.AddDays(1);
+                        }
+                        dateOfWeekEnd= dateOfWeekEnd.AddDays(1);
+                    } 
+                }
             }
-            
-            return startDate.AddDays(dayCount+daysinWeekEnds-1);
+            return resDate;
         }
     }
 }
